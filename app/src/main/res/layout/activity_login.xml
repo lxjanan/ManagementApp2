@@ -27,10 +27,12 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
+        android:drawableLeft="@drawable/ic_mail"
+        android:drawablePadding="10dp"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:background="@drawable/text_input"/>
+        android:background="@drawable/text_input" />
 
     <EditText
         android:id="@+id/loginP"
@@ -43,6 +45,8 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
+        android:drawableLeft="@drawable/ic_key"
+        android:drawablePadding="10dp"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
