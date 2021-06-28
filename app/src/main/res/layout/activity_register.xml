@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient1"
-    tools:context=".Login">
+    tools:context=".RegisterActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/loginT"
+        android:id="@+id/RegisterT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -27,7 +27,7 @@
         app:srcCompat="@drawable/school_logo" />
 
     <EditText
-        android:id="@+id/loginE"
+        android:id="@+id/RegisterE"
         android:autofillHints="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:drawableLeft="@drawable/ic_mail" />
 
     <EditText
-        android:id="@+id/loginP"
+        android:id="@+id/RegisterP"
         android:autofillHints="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,10 +66,10 @@
         android:drawableLeft="@drawable/ic_key" />
 
     <Button
-        android:id="@+id/loginB"
+        android:id="@+id/RegisterB"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/login_button"
+        android:text="@string/register_button"
         android:textColor="@color/white"
         android:fontFamily="@font/quicksand_bold"
         android:layout_margin="10dp"
