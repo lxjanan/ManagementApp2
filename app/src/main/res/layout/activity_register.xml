@@ -8,14 +8,6 @@
     android:background="@drawable/gradient1"
     tools:context=".RegisterActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/RegisterT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"/>
-
     <ImageView
         android:id="@+id/logo_image"
         android:layout_width="140dp"
@@ -27,7 +19,7 @@
         app:srcCompat="@drawable/school_logo" />
 
     <EditText
-        android:id="@+id/RegisterE"
+        android:id="@+id/registerE"
         android:autofillHints="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +38,8 @@
         android:drawableLeft="@drawable/ic_mail" />
 
     <EditText
-        android:id="@+id/RegisterP"
+        android:id="@+id/registerP"
+        app:passwordToggleEnabled="true"
         android:autofillHints="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +59,7 @@
         android:drawableLeft="@drawable/ic_key" />
 
     <Button
-        android:id="@+id/RegisterB"
+        android:id="@+id/registerB"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/register_button"
@@ -78,10 +71,10 @@
         app:backgroundTint="@color/blue" />
 
     <TextView
-        android:id="@+id/loginR"
+        android:id="@+id/registerR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register_text"
+        android:text="@string/return_text"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="10dp"/>

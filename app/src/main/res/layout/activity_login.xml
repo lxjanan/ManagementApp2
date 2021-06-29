@@ -8,14 +8,6 @@
     android:background="@drawable/gradient1"
     tools:context=".Login">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/loginT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"/>
-
     <ImageView
         android:id="@+id/logo_image"
         android:layout_width="140dp"
@@ -47,6 +39,7 @@
 
     <EditText
         android:id="@+id/loginP"
+        app:passwordToggleEnabled="true"
         android:autofillHints="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
