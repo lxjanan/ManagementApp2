@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "746027705068",
+    "project_id": "todolist-4b446",
+    "storage_bucket": "todolist-4b446.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746027705068:android:9618a8a0da03b336d2bbc9",
+        "android_client_info": {
+          "package_name": "com.lojanan.managementapp2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746027705068-jbem6fpn4jvvgqmv139edqdi4v2th4el.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lojanan.managementapp2",
+            "certificate_hash": "2e07b9560f9a9ba21b6084c0596649f8f36d07bf"
+          }
+        },
+        {
+          "client_id": "746027705068-ho91bt8r2cdrinoc1r3hefndo3qimpkd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf4VZ1qDi6mg3C8UW8r4uBtTwioz07YUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746027705068-ho91bt8r2cdrinoc1r3hefndo3qimpkd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
