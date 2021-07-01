@@ -15,7 +15,7 @@
         android:padding="25dp"
         android:textColor="@color/white"
         android:fontFamily="@font/quicksand_bold"
-        android:textSize="30sp" />
+        android:textSize="25sp" />
 <!--This LinearLayout is for the task entry section-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,19 +100,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/addtask_button"
             android:layout_marginRight="100dp"
-            android:layout_marginLeft="100dp">
+            android:layout_marginLeft="100dp"
+            android:background="@drawable/addtask_button">
+            <!--Had to add background twice as Android Studio default style appears instead of the
+            custom button background. By adding the selectableItemBackground, I am able to make the
+            default style transparent and hence it will show the drawable file with a better looking
+            button-->
             <Button
                 android:id="@+id/saveBtn"
+                android:background="?android:attr/selectableItemBackground"
                 android:text="@string/save"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="20sp"
                 android:textColor="@color/task_blue"
-                android:background=""
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
@@ -124,15 +128,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/addtask_button"
             android:layout_marginRight="100dp"
-            android:layout_marginLeft="100dp"
-            >
+            android:layout_marginLeft="100dp">
             <Button
                 android:id="@+id/cancelBtn"
+                android:background="?android:attr/selectableItemBackground"
                 android:text="@string/cancel"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="20sp"
                 android:textColor="@color/task_blue"
-                android:background=""
                 android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

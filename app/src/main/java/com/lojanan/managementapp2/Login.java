@@ -26,24 +26,61 @@ import org.jetbrains.annotations.NotNull;
 public class Login extends AppCompatActivity {
 
     // We use private as it cannot be overridden
-    private EditText loginEmail, loginPass;
-    private Button loginButton;
+    private EditText mLoginEmail, mLoginPass;
+    private Button mLoginBtn;
     private TextView loginRegister;
 
-    private FirebaseAuth mAuth;
-    private ProgressDialog progress;
+    private FirebaseAuth fAuth;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progressBar);
 
-        loginEmail = findViewById(R.id.loginE);
-        loginPass = findViewById(R.id.loginP); // This code finds the view for the method
-        loginButton = findViewById(R.id.loginB);
+        mLoginEmail = findViewById(R.id.loginE);
+        mLoginPass = findViewById(R.id.loginP); // This code finds the view for the method
+        mLoginBtn = findViewById(R.id.loginB);
         loginRegister = findViewById(R.id.loginR);
+
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = mLoginEmail.getText().toString().trim();
+                String password = mLoginPass.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    mLoginEmail.setError("Email required");
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    mLoginPass.setError("Password required");
+                    return;
+                }
+                if (password.length() < 6) {
+                    mLoginPass.setError("Password must be more than 6 characters");
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+
+                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
+                        }else {
+                            Toast.makeText(Login.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+        });
 
         loginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,43 +93,5 @@ public class Login extends AppCompatActivity {
                 },100);
             }
         });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = loginEmail.getText().toString().trim();
-                String password = loginPass.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)){
-                    loginEmail.setError("Email required");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    loginPass.setError("Password required");
-                    return;
-                } else {
-                    progress.setMessage("Login in progress");
-                    progress.setCanceledOnTouchOutside(false);
-                    progress.show();
-
-                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Intent intent = new Intent(Login.this, ToDoActivity.class);
-                                startActivity(intent);
-                                finish();
-                                progress.dismiss();
-                            } else {
-                                String error = task.getException().toString();
-                                Toast.makeText(Login.this, "Login failed", Toast.LENGTH_SHORT).show();
-                                progress.dismiss();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
     }
 }
