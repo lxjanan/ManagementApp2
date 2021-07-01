@@ -15,4 +15,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="remember">Remember me</string>
+    <string name="todolist">To Do List</string>
+    <string name="home">Home</string>
+    <string name="kamar">KAMAR Portal</string>
 </resources>

@@ -54,76 +54,67 @@ public class Login extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
         if (checkbox.equals("true")){
-            Intent intent = new Intent(Login.this, ToDoActivity.class);
+            Intent intent = new Intent(Login.this, MainActivity.class);
             startActivity(intent);
         }else if (checkbox.equals("false")){
             Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
         }
 
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = mLoginEmail.getText().toString().trim();
-                String password = mLoginPass.getText().toString().trim();
+        mLoginBtn.setOnClickListener(v -> {
+            String email = mLoginEmail.getText().toString().trim();
+            String password = mLoginPass.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)) {
-                    mLoginEmail.setError("Email required");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    mLoginPass.setError("Password required");
-                    return;
-                }
-                if (password.length() < 6) {
-                    mLoginPass.setError("Password must be more than 6 characters");
-                    return;
-                }
+            if (TextUtils.isEmpty(email)) {
+                mLoginEmail.setError("Email required");
+                return;
+            }
+            if (TextUtils.isEmpty(password)) {
+                mLoginPass.setError("Password required");
+                return;
+            }
+            if (password.length() < 6) {
+                mLoginPass.setError("Password must be more than 6 characters");
+                return;
+            }
 
-                progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
 
-                fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), ToDoActivity.class));
-                        }else {
-                            Toast.makeText(Login.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }else {
+                        Toast.makeText(Login.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
-                });
-            }
-        });
-
-        loginRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    startActivity(new Intent(Login.this,RegisterActivity.class));
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    finish();
-                },100);
-            }
-        });
-
-        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton rememberButton, boolean isChecked) {
-                if (rememberButton.isChecked()) {
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE); //Used MODE_PRIVATE so that only this application is able to read the data
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "true");
-                    editor.apply();
-                    Toast.makeText(Login.this, "Remember me: ON", Toast.LENGTH_SHORT).show();
-                }else if (!rememberButton.isChecked()) {
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("remember", "false");
-                    editor.apply();
-                    Toast.makeText(Login.this, "Remember me: OFF", Toast.LENGTH_SHORT).show();
                 }
+            });
+        });
+
+        loginRegister.setOnClickListener(v -> {
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(new Intent(Login.this,RegisterActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            },100);
+        });
+
+        remember.setOnCheckedChangeListener((rememberButton, isChecked) -> {
+            if (rememberButton.isChecked()) {
+                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE); //Used MODE_PRIVATE so that only this application is able to read the data
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.putString("remember", "true");
+                editor.apply();
+                Toast.makeText(Login.this, "Remember me: ON", Toast.LENGTH_SHORT).show();
+            }else if (!rememberButton.isChecked()) {
+                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+                Toast.makeText(Login.this, "Remember me: OFF", Toast.LENGTH_SHORT).show();
             }
         });
     }
