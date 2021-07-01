@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class ToDoActivity extends AppCompatActivity {
 
@@ -80,9 +88,48 @@ public class ToDoActivity extends AppCompatActivity {
         View myView = inflater.inflate(R.layout.addtask_file, null);
         alertDialog.setView(myView);
 
-        AlertDialog dialog = alertDialog.create();
+        final AlertDialog dialog = alertDialog.create();
         dialog.setCancelable(false);
-        dialog.show();
+
+        final EditText task = myView.findViewById(R.id.task);
+        final EditText description = myView.findViewById(R.id.description);
+        Button save = myView.findViewById(R.id.saveBtn);
+        Button cancel = myView.findViewById(R.id.cancelBtn);
+
+        cancel.setOnClickListener(v -> dialog.dismiss());
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String mTask = task.getText().toString().trim();
+                String mDescription = description.getText().toString().trim();
+                String id = reference.push().getKey();
+                String date = DateFormat.getDateInstance().format(new Date());
+
+                if (TextUtils.isEmpty(mTask)){
+                    task.setError("Please add a task");
+                    return;
+                }
+                if (TextUtils.isEmpty(mDescription)){
+                    description.setError("Please add a description");
+                    return;
+                } else {
+                    Model model = new Model(mTask, mDescription, id, date);
+                    reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ToDoActivity.this, "Task has been added", Toast.LENGTH_SHORT).show();
+                            } else {
+                                String error = task.getException().toString();
+                                Toast.makeText(ToDoActivity.this, "Failed" + error, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                dialog.dismiss();
+            }
+        });
     }
 
 }

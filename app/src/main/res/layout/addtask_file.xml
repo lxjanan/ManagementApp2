@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4">
             <EditText
-                android:id="@+id/task2"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_desc"
