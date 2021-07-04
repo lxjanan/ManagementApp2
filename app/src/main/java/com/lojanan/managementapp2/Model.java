@@ -6,7 +6,7 @@ public class Model {
     public Model() {
     }
 
-    public Model(String task, String description, String id, String date) { // Model Constructor
+    public Model(String task, String description, String id, String date) {
         this.task = task;
         this.description = description;
         this.id = id;

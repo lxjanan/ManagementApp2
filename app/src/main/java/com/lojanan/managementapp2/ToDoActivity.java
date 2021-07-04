@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -40,6 +41,12 @@ public class ToDoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    private ProgressDialog loader;
+
+    private String key = "";
+    private String task;
+    private String description;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +65,15 @@ public class ToDoActivity extends AppCompatActivity {
         userID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(userID);
 
+        loader = new ProgressDialog(this);
+
         fab = findViewById(R.id.floatBtn);
-        fab.setOnClickListener(v -> addTask());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTask();
+            }
+        });
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.toDoList);
@@ -96,8 +110,12 @@ public class ToDoActivity extends AppCompatActivity {
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,23 +124,29 @@ public class ToDoActivity extends AppCompatActivity {
                 String id = reference.push().getKey();
                 String date = DateFormat.getDateInstance().format(new Date());
 
-                if (TextUtils.isEmpty(mTask)){
-                    task.setError("Please add a task");
+                if (TextUtils.isEmpty(mTask)) {
+                    task.setError("Task required");
                     return;
                 }
                 if (TextUtils.isEmpty(mDescription)){
-                    description.setError("Please add a description");
+                    description.setError("Description required");
                     return;
-                } else {
+                }else {
+                    loader.setMessage("Task is being added");
+                    loader.setCanceledOnTouchOutside(false);
+                    loader.show();
+
                     Model model = new Model(mTask, mDescription, id, date);
                     reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(ToDoActivity.this, "Task has been added", Toast.LENGTH_SHORT).show();
+                            if (task.isSuccessful()){
+                                Toast.makeText(ToDoActivity.this, "Task added successfully", Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
                             } else {
                                 String error = task.getException().toString();
-                                Toast.makeText(ToDoActivity.this, "Failed" + error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
+                                loader.dismiss();
                             }
                         }
                     });
