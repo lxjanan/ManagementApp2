@@ -36,7 +36,8 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:background="@drawable/text_input"
-        android:drawableLeft="@drawable/ic_mail" />
+        android:drawableLeft="@drawable/ic_mail"
+        android:elevation="6dp"/>
 
     <EditText
         android:id="@+id/loginP"
@@ -56,7 +57,8 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:background="@drawable/text_input"
-        android:drawableLeft="@drawable/ic_key" />
+        android:drawableLeft="@drawable/ic_key"
+        android:elevation="6dp"/>
 
     <CheckBox
         android:id="@+id/rememberMe"
@@ -67,14 +69,17 @@
 
     <Button
         android:id="@+id/loginB"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
         android:textColor="@color/white"
         android:fontFamily="@font/quicksand_bold"
         android:textAllCaps="false"
         android:layout_gravity="center"
-        app:backgroundTint="@color/task_blue" />
+        android:elevation="6dp"
+        app:backgroundTint="@color/task_blue"
+        android:drawableLeft="@drawable/ic_login"
+        android:drawableTint="@color/white" />
 
     <TextView
         android:id="@+id/loginR"
