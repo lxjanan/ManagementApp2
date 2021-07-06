@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/task_blue"
-    android:isScrollContainer="false">
-<!--TextView is used to show the user what this section is for-->
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:text="@string/new_task"
+        android:text="@string/update_task"
         android:gravity="center"
         android:padding="25dp"
         android:textColor="@color/white"
         android:fontFamily="@font/quicksand_bold"
         android:textSize="25sp" />
-<!--This LinearLayout is for the task entry section-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4">
             <EditText
-                android:id="@+id/task"
+                android:id="@+id/editTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_task"
@@ -59,7 +57,7 @@
         </RelativeLayout>
 
     </LinearLayout>
-<!--This LinearLayout is for description section-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4">
             <EditText
-                android:id="@+id/description"
+                android:id="@+id/editDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_desc"
@@ -100,7 +98,7 @@
                 android:background="@drawable/text_input"/>
         </RelativeLayout>
     </LinearLayout>
-<!--LinearLayout for Save & Cancel Button respectively-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,14 +109,11 @@
             android:layout_marginRight="100dp"
             android:layout_marginLeft="100dp"
             android:background="@drawable/addtask_button">
-            <!--Had to add background twice as Android Studio default style appears instead of the
-            custom button background. By adding the selectableItemBackground, I am able to make the
-            default style transparent and hence it will show the drawable file with a better looking
-            button-->
+
             <Button
-                android:id="@+id/saveBtn"
+                android:id="@+id/updateBtn"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/save"
+                android:text="@string/update"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="20sp"
                 android:textColor="@color/task_blue"
@@ -139,9 +134,9 @@
             android:layout_marginRight="100dp"
             android:layout_marginLeft="100dp">
             <Button
-                android:id="@+id/cancelBtn"
+                android:id="@+id/deleteBtn"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/cancel"
+                android:text="@string/delete"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="20sp"
                 android:textColor="@color/task_blue"

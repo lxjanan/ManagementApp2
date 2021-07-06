@@ -9,12 +9,15 @@
     <string name="return_text">Already have an account? Click to return to login</string>
     <string name="content_desc1">MRGS Logo</string>
     <string name="new_task">Add new task</string>
+    <string name="update_task">Update task</string>
     <string name="task">Task</string>
     <string name="enter_task">Enter task</string>
     <string name="description">Description</string>
     <string name="enter_desc">Enter description</string>
     <string name="save">Save</string>
+    <string name="update">Update</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
     <string name="remember">Remember me</string>
     <string name="todolist">To Do List</string>
     <string name="home">Home</string>
