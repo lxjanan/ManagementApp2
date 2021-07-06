@@ -1,7 +1,9 @@
 package com.lojanan.managementapp2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +15,18 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth;
-    private Button mLogout;
+    private FirebaseAuth mAuth;
+    private android.widget.Button logBtn;
 
     BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLogout = findViewById(R.id.logoutB);
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        logBtn = findViewById(R.id.logoutB);
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.homePage);
@@ -44,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-//        mLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mFirebaseAuth.signOut();
-//                Intent intent = new Intent(MainActivity.this, Login.class);
-//                startActivity(intent);
-//            }
-//        });
+    }
+
+    public void logOut(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

@@ -84,7 +84,12 @@ public class Login extends AppCompatActivity {
                 public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            startActivity(new Intent(Login.this,MainActivity.class));
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            finish();
+                        },100);
                     }else {
                         Toast.makeText(Login.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
