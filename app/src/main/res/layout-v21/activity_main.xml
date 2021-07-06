@@ -17,6 +17,7 @@
         android:layout_centerInParent="true"/>
 
     <android.widget.Button
+        android:id="@+id/logoutB"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/logout_button"
@@ -26,7 +27,8 @@
         android:fontFamily="@font/quicksand_bold"
         android:paddingLeft="10dp"
         android:background="@drawable/logout_button"
-        android:elevation="10dp"
+        android:elevation="6dp"
+        android:outlineAmbientShadowColor="@color/black"
         android:drawableStart="@drawable/ic_logout"
         android:drawableTint="@color/white"
         android:layout_alignParentRight="true"
