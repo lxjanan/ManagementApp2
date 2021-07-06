@@ -46,7 +46,7 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         mLoginEmail = findViewById(R.id.loginE);
-        mLoginPass = findViewById(R.id.loginP); // This code finds the view for the method
+        mLoginPass = findViewById(R.id.loginP); // This code allows for the view to be displayed on the user's screen. In this case, the password login will be displayed
         mLoginBtn = findViewById(R.id.loginB);
         loginRegister = findViewById(R.id.loginR);
         remember = findViewById(R.id.rememberMe);
