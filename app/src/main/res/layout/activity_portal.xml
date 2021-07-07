@@ -5,17 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KamarPortal">
+    tools:context=".PortalActivity">
 
-    <TextView
-        android:id="@+id/kamarText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/kamar"
-        android:fontFamily="@font/quicksand_bold"
-        android:textSize="40sp"
-        android:textColor="@color/black"
-        android:layout_centerInParent="true"/>
+    <WebView
+        android:id="@+id/portalView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"
+        android:layout_centerInParent="true" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

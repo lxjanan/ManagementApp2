@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,8 +21,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,17 +32,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class ToDoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private FloatingActionButton fab;
     BottomNavigationView bottomNavigationView;
 
     private DatabaseReference reference;
-    private String userID;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
 
     private ProgressDialog loader;
 
@@ -51,12 +47,13 @@ public class ToDoActivity extends AppCompatActivity {
     private String task;
     private String description;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         recyclerView = findViewById(R.id.recyclerV);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -65,19 +62,14 @@ public class ToDoActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(llm);
 
-        mUser = mAuth.getCurrentUser();
-        userID = mUser.getUid();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String userID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(userID);
 
         loader = new ProgressDialog(this);
 
-        fab = findViewById(R.id.floatBtn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTask();
-            }
-        });
+        FloatingActionButton fab = findViewById(R.id.floatBtn);
+        fab.setOnClickListener(v -> addTask());
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.toDoList);
@@ -91,7 +83,7 @@ public class ToDoActivity extends AppCompatActivity {
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.kamarPortal:
-                    startActivity(new Intent(getApplicationContext(), KamarPortal.class));
+                    startActivity(new Intent(getApplicationContext(), PortalActivity.class));
                     overridePendingTransition(0,0);
                     return true;
             }
@@ -114,9 +106,7 @@ public class ToDoActivity extends AppCompatActivity {
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
 
-        cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        cancel.setOnClickListener(v -> dialog.dismiss());
         save.setOnClickListener(v -> {
             String mTask = task.getText().toString().trim();
             String mDescription = description.getText().toString().trim();
@@ -136,18 +126,15 @@ public class ToDoActivity extends AppCompatActivity {
                 loader.show();
 
                 Model model = new Model(mTask, mDescription, id, date);
-                reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task1) {
-                        if (task1.isSuccessful()){
-                            Toast.makeText(ToDoActivity.this, "Task added successfully", Toast.LENGTH_SHORT).show();
-                            loader.dismiss();
-                        } else {
-                            String error = task1.getException().toString();
-                            Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
-                            loader.dismiss();
-                        }
+                assert id != null;
+                reference.child(id).setValue(model).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()){
+                        Toast.makeText(ToDoActivity.this, "Task added successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String error = Objects.requireNonNull(task1.getException()).toString();
+                        Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
                     }
+                    loader.dismiss();
                 });
             }
             dialog.dismiss();
@@ -166,7 +153,7 @@ public class ToDoActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<Model, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Model, MyViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position, @NonNull @NotNull Model model) {
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull Model model) {
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
                 holder.setDesc(model.getDescription());
@@ -181,9 +168,8 @@ public class ToDoActivity extends AppCompatActivity {
             }
 
             @NonNull
-            @NotNull
             @Override
-            public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
                 view.getLayoutParams().height = parent.getMeasuredHeight() / 4; //This code is added so that the ViewHolder doesn't take up an entire page
                 return new MyViewHolder(view);
@@ -218,12 +204,13 @@ public class ToDoActivity extends AppCompatActivity {
     private void updateTask(){
         AlertDialog.Builder dialogTask = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.update_task, null);
-        dialogTask.setView(v);
+        View view = inflater.inflate(R.layout.update_task, null);
+        dialogTask.setView(view);
 
         AlertDialog dialog = dialogTask.create();
-        EditText mTask = findViewById(R.id.task);
-        EditText mDesc = findViewById(R.id.description);
+
+        EditText mTask = (EditText)view.findViewById(R.id.mEditTask);
+        EditText mDesc = (EditText)view.findViewById(R.id.mEditDescription);
 
         mTask.setText(task);
         mTask.setSelection(task.length());
@@ -231,8 +218,8 @@ public class ToDoActivity extends AppCompatActivity {
         mDesc.setText(description);
         mDesc.setSelection(description.length());
 
-        Button deleteB = v.findViewById(R.id.deleteBtn);
-        Button updateB = v.findViewById(R.id.updateBtn);
+        Button deleteB = view.findViewById(R.id.deleteBtn);
+        Button updateB = view.findViewById(R.id.updateBtn);
 
         updateB.setOnClickListener(v1 -> {
             task = mTask.getText().toString().trim();
@@ -246,7 +233,7 @@ public class ToDoActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Toast.makeText(ToDoActivity.this, "Updated Task", Toast.LENGTH_SHORT).show();
                 }else {
-                    String error = task.getException().toString();
+                    String error = Objects.requireNonNull(task.getException()).toString();
                     Toast.makeText(ToDoActivity.this, "Task update failed"+ error, Toast.LENGTH_SHORT).show();
                 }
 
@@ -259,7 +246,7 @@ public class ToDoActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Toast.makeText(ToDoActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
                 }else {
-                    String error = task.getException().toString();
+                    String error = Objects.requireNonNull(task.getException()).toString();
                     Toast.makeText(ToDoActivity.this, "Task delete failed"+ error, Toast.LENGTH_SHORT).show();
                 }
             });

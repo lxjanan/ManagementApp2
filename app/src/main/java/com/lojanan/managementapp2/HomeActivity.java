@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +34,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.putString("remember", "false");
+                editor.apply();
                 Intent intent = new Intent(HomeActivity.this, Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -52,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.homePage:
                     return true;
                 case R.id.kamarPortal:
-                    startActivity(new Intent(getApplicationContext(), KamarPortal.class));
+                    startActivity(new Intent(getApplicationContext(), PortalActivity.class));
                     overridePendingTransition(0,0);
                     return true;
             }
