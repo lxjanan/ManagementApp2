@@ -17,7 +17,7 @@
             android:id="@+id/recyclerV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="58dp"/>
+            android:layout_marginBottom="56.5dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatBtn"

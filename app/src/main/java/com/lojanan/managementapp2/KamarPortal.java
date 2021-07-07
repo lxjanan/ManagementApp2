@@ -1,15 +1,11 @@
 package com.lojanan.managementapp2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.jetbrains.annotations.NotNull;
 
 public class KamarPortal extends AppCompatActivity {
 
@@ -30,7 +26,7 @@ public class KamarPortal extends AppCompatActivity {
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.homePage:
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.kamarPortal:

@@ -3,7 +3,6 @@ package com.lojanan.managementapp2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -88,7 +87,7 @@ public class ToDoActivity extends AppCompatActivity {
                 case R.id.toDoList:
                     return true;
                 case R.id.homePage:
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.kamarPortal:
@@ -115,49 +114,43 @@ public class ToDoActivity extends AppCompatActivity {
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
+        cancel.setOnClickListener(v -> {
+            dialog.dismiss();
         });
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mTask = task.getText().toString().trim();
-                String mDescription = description.getText().toString().trim();
-                String id = reference.push().getKey();
-                String date = DateFormat.getDateInstance().format(new Date());
+        save.setOnClickListener(v -> {
+            String mTask = task.getText().toString().trim();
+            String mDescription = description.getText().toString().trim();
+            String id = reference.push().getKey();
+            String date = DateFormat.getDateInstance().format(new Date());
 
-                if (TextUtils.isEmpty(mTask)) {
-                    task.setError("Task required");
-                    return;
-                }
-                if (TextUtils.isEmpty(mDescription)){
-                    description.setError("Description required");
-                    return;
-                }else {
-                    loader.setMessage("Task is being added");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
-
-                    Model model = new Model(mTask, mDescription, id, date);
-                    reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(ToDoActivity.this, "Task added successfully", Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            } else {
-                                String error = task.getException().toString();
-                                Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            }
-                        }
-                    });
-                }
-                dialog.dismiss();
+            if (TextUtils.isEmpty(mTask)) {
+                task.setError("Task required");
+                return;
             }
+            if (TextUtils.isEmpty(mDescription)){
+                description.setError("Description required");
+                return;
+            }else {
+                loader.setMessage("Task is being added");
+                loader.setCanceledOnTouchOutside(false);
+                loader.show();
+
+                Model model = new Model(mTask, mDescription, id, date);
+                reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task1) {
+                        if (task1.isSuccessful()){
+                            Toast.makeText(ToDoActivity.this, "Task added successfully", Toast.LENGTH_SHORT).show();
+                            loader.dismiss();
+                        } else {
+                            String error = task1.getException().toString();
+                            Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
+                            loader.dismiss();
+                        }
+                    }
+                });
+            }
+            dialog.dismiss();
         });
 
         dialog.show();
@@ -177,6 +170,14 @@ public class ToDoActivity extends AppCompatActivity {
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
                 holder.setDesc(model.getDescription());
+
+                holder.mView.setOnClickListener(v -> {
+                    key = getRef(position).getKey();
+                    task = model.getTask();
+                    description = model.getDescription();
+
+                    updateTask();
+                });
             }
 
             @NonNull
@@ -213,5 +214,58 @@ public class ToDoActivity extends AppCompatActivity {
         public void setDate(String date){
             TextView dateTextView = mView.findViewById(R.id.dateView);
         }
+    }
+    private void updateTask(){
+        AlertDialog.Builder dialogTask = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.update_task, null);
+        dialogTask.setView(v);
+
+        AlertDialog dialog = dialogTask.create();
+        EditText mTask = findViewById(R.id.task);
+        EditText mDesc = findViewById(R.id.description);
+
+        mTask.setText(task);
+        mTask.setSelection(task.length());
+
+        mDesc.setText(description);
+        mDesc.setSelection(description.length());
+
+        Button deleteB = v.findViewById(R.id.deleteBtn);
+        Button updateB = v.findViewById(R.id.updateBtn);
+
+        updateB.setOnClickListener(v1 -> {
+            task = mTask.getText().toString().trim();
+            description = mDesc.getText().toString().trim();
+
+            String date = DateFormat.getDateInstance().format(new Date());
+
+            Model model = new Model(task, description, key, date);
+            reference.child(key).setValue(model).addOnCompleteListener(task -> {
+
+                if (task.isSuccessful()){
+                    Toast.makeText(ToDoActivity.this, "Updated Task", Toast.LENGTH_SHORT).show();
+                }else {
+                    String error = task.getException().toString();
+                    Toast.makeText(ToDoActivity.this, "Task update failed"+ error, Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            dialog.dismiss();
+        });
+
+        deleteB.setOnClickListener(v12 -> {
+            reference.child(key).removeValue().addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Toast.makeText(ToDoActivity.this, "Task Deleted", Toast.LENGTH_SHORT).show();
+                }else {
+                    String error = task.getException().toString();
+                    Toast.makeText(ToDoActivity.this, "Task delete failed"+ error, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 }

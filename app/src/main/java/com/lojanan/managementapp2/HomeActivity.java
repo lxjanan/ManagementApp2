@@ -1,6 +1,5 @@
 package com.lojanan.managementapp2;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -8,15 +7,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private android.widget.Button logout;
@@ -27,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         mAuth = FirebaseAuth.getInstance();
         logout = findViewById(R.id.logoutB);
@@ -36,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(HomeActivity.this, Login.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        MainActivity.super.onBackPressed();
+                        HomeActivity.super.onBackPressed();
                         finishAffinity();
                     }
                 }).create().show();
