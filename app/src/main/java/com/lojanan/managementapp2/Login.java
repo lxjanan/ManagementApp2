@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity {
                             finish();
                         },100);
                     }else {
-                        Toast.makeText(Login.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
                 }
