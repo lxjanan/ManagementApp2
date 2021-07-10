@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -99,6 +101,7 @@ public class ToDoActivity extends AppCompatActivity {
         alertDialog.setView(myView);
 
         final AlertDialog dialog = alertDialog.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //This code removes the white part of the alertdialog
         dialog.setCancelable(false);
 
         final EditText task = myView.findViewById(R.id.task);
@@ -208,6 +211,7 @@ public class ToDoActivity extends AppCompatActivity {
         dialogTask.setView(view);
 
         AlertDialog dialog = dialogTask.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         EditText mTask = (EditText)view.findViewById(R.id.mEditTask);
         EditText mDesc = (EditText)view.findViewById(R.id.mEditDescription);
@@ -239,6 +243,7 @@ public class ToDoActivity extends AppCompatActivity {
 
             });
             dialog.dismiss();
+
         });
 
         deleteB.setOnClickListener(v12 -> {
