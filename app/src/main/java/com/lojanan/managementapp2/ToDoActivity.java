@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -48,6 +51,9 @@ public class ToDoActivity extends AppCompatActivity {
     private String key = "";
     private String task;
     private String description;
+    private String date;
+
+    DatePickerDialog.OnDateSetListener setListener;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -106,6 +112,26 @@ public class ToDoActivity extends AppCompatActivity {
 
         final EditText task = myView.findViewById(R.id.task);
         final EditText description = myView.findViewById(R.id.description);
+        final EditText date = myView.findViewById(R.id.date);
+
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        date.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(ToDoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    setListener,year,month,day);
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+        });
+
+        setListener = (view, year1, month1, day1) -> {
+            month1 = month1 +1;
+            String mDate = day+"/"+ month1 +"/"+ year;
+            date.setText(mDate);
+        };
+
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
 
@@ -114,7 +140,8 @@ public class ToDoActivity extends AppCompatActivity {
             String mTask = task.getText().toString().trim();
             String mDescription = description.getText().toString().trim();
             String id = reference.push().getKey();
-            String date = DateFormat.getDateInstance().format(new Date());
+//            String date = DateFormat.getDateInstance().format(new Date());
+            String mDate = date.getText().toString().trim();
 
             if (TextUtils.isEmpty(mTask)) {
                 task.setError("Task required");
@@ -123,12 +150,16 @@ public class ToDoActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(mDescription)){
                 description.setError("Description required");
                 return;
-            }else {
+            }
+            if (TextUtils.isEmpty(mDate)){
+                Toast.makeText(alertDialog.getContext(), "Please select a date", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
                 loader.setMessage("Task is being added");
                 loader.setCanceledOnTouchOutside(false);
                 loader.show();
 
-                Model model = new Model(mTask, mDescription, id, date);
+                Model model = new Model(mTask, mDescription, id, mDate);
                 assert id != null;
                 reference.child(id).setValue(model).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()){
@@ -165,6 +196,7 @@ public class ToDoActivity extends AppCompatActivity {
                     key = getRef(position).getKey();
                     task = model.getTask();
                     description = model.getDescription();
+                    date = model.getDate(); // date test
 
                     updateTask();
                 });
@@ -202,6 +234,7 @@ public class ToDoActivity extends AppCompatActivity {
         }
         public void setDate(String date){
             TextView dateTextView = mView.findViewById(R.id.dateView);
+            dateTextView.setText(date); // date test
         }
     }
     private void updateTask(){

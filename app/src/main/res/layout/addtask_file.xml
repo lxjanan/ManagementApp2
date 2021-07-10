@@ -100,6 +100,49 @@
                 android:background="@drawable/text_input"/>
         </RelativeLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="@string/date"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/quicksand_bold"
+                android:layout_margin="10dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4">
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/select_date"
+                android:focusable="false"
+                android:textColorHint="@color/white"
+                android:fontFamily="@font/quicksand"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:padding="7dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/text_input"/>
+        </RelativeLayout>
+    </LinearLayout>
+
 <!--LinearLayout for Save & Cancel Button respectively-->
     <LinearLayout
         android:layout_width="match_parent"

@@ -30,19 +30,16 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         logout = findViewById(R.id.logoutB);
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                Intent intent = new Intent(HomeActivity.this, Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
-            }
+        logout.setOnClickListener(v -> {
+            mAuth.signOut();
+            SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences1.edit();
+            editor.putString("remember", "false");
+            editor.apply();
+            Intent intent = new Intent(HomeActivity.this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
         });
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
