@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -114,17 +115,17 @@ public class ToDoActivity extends AppCompatActivity {
         final EditText description = myView.findViewById(R.id.description);
         final EditText date = myView.findViewById(R.id.date);
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(); // Gets Calendar
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH); // Gets Year, Month & Day
 
         date.setOnClickListener(v -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(alertDialog.getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     setListener,year,month,day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
-        });
+        }); // When the edit text for the date is selected, the datepicker dialog will open allowing users to select a date
 
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -133,29 +134,29 @@ public class ToDoActivity extends AppCompatActivity {
                 String mDate = dayOfMonth+"/"+month+"/"+year;
                 date.setText(mDate);
             }
-        };
+        }; // The setListener sets the editText's text value as the user's selected date from the DatePickerDialog
 
         Button save = myView.findViewById(R.id.saveBtn);
         Button cancel = myView.findViewById(R.id.cancelBtn);
 
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> dialog.dismiss()); // When the cancel button is pressed, the Add Task Alertdialog will disappear
         save.setOnClickListener(v -> {
-            String mTask = task.getText().toString().trim();
+            String mTask = task.getText().toString().trim(); // Collects user input and converts to string
             String mDescription = description.getText().toString().trim();
             String id = reference.push().getKey();
             String mDate = date.getText().toString().trim();
 
             if (TextUtils.isEmpty(mTask)) {
                 task.setError("Task required");
-                return;
+                return; //If user doesn't add a task title, it will ask them to write one
             }
             if (TextUtils.isEmpty(mDescription)){
                 description.setError("Description required");
-                return;
+                return; //If user doesn't add description for their task, this code sets an error message to let them know
             }
             if (TextUtils.isEmpty(mDate)){
                 Toast.makeText(alertDialog.getContext(), "Please select a date", Toast.LENGTH_SHORT).show();
-                return;
+                return; //If a date isn't selected, the app will notify the user with a Toast message
             } else {
                 loader.setMessage("Task is being added");
                 loader.setCanceledOnTouchOutside(false);
@@ -171,9 +172,9 @@ public class ToDoActivity extends AppCompatActivity {
                         Toast.makeText(ToDoActivity.this,"Failed: " + error, Toast.LENGTH_SHORT).show();
                     }
                     loader.dismiss();
-                });
+                }); //If user has added in a task, description and date, then a Toast message will be displayed to inform users if the addition was successful or not
             }
-            dialog.dismiss();
+            dialog.dismiss(); //The dialog will be dismissed returning the users to the ToDoActivity
         });
 
         dialog.show();
@@ -198,10 +199,10 @@ public class ToDoActivity extends AppCompatActivity {
                     key = getRef(position).getKey();
                     task = model.getTask();
                     description = model.getDescription();
-                    date = model.getDate(); // date test
+                    date = model.getDate();
 
                     updateTask();
-                });
+                }); //Collects data from Firebase regarding added task, description and date
             }
 
             @NonNull
@@ -211,7 +212,7 @@ public class ToDoActivity extends AppCompatActivity {
                 view.getLayoutParams().height = parent.getMeasuredHeight() / 4; //This code is added so that the ViewHolder doesn't take up an entire page
                 return new MyViewHolder(view);
             }
-        };
+        }; //Creates a ViewHolder that will be displayed on the To Do Activity
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
@@ -227,18 +228,18 @@ public class ToDoActivity extends AppCompatActivity {
 
         public void setTask(String task){
             TextView taskTextView = mView.findViewById(R.id.taskView);
-            taskTextView.setText(task);
+            taskTextView.setText(task); // Sets the user input for task
         }
 
         public void setDesc(String desc){
             TextView descTextView = mView.findViewById(R.id.descriptionView);
-            descTextView.setText(desc);
+            descTextView.setText(desc); // Sets the user input for description
         }
         public void setDate(String date){
             TextView dateTextView = mView.findViewById(R.id.dateView);
-            dateTextView.setText(date); // date test
+            dateTextView.setText(date); // Sets the user input for date
         }
-    }
+    } //Adds the data onto the recyclerview in the To Do xml file
     private void updateTask(){
         AlertDialog.Builder dialogTask = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
