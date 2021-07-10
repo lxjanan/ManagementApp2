@@ -120,16 +120,19 @@ public class ToDoActivity extends AppCompatActivity {
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         date.setOnClickListener(v -> {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(ToDoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(alertDialog.getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     setListener,year,month,day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
         });
 
-        setListener = (view, year1, month1, day1) -> {
-            month1 = month1 +1;
-            String mDate = day+"/"+ month1 +"/"+ year;
-            date.setText(mDate);
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month +1;
+                String mDate = dayOfMonth+"/"+month+"/"+year;
+                date.setText(mDate);
+            }
         };
 
         Button save = myView.findViewById(R.id.saveBtn);
@@ -140,7 +143,6 @@ public class ToDoActivity extends AppCompatActivity {
             String mTask = task.getText().toString().trim();
             String mDescription = description.getText().toString().trim();
             String id = reference.push().getKey();
-//            String date = DateFormat.getDateInstance().format(new Date());
             String mDate = date.getText().toString().trim();
 
             if (TextUtils.isEmpty(mTask)) {
@@ -246,8 +248,8 @@ public class ToDoActivity extends AppCompatActivity {
         AlertDialog dialog = dialogTask.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        EditText mTask = (EditText)view.findViewById(R.id.mEditTask);
-        EditText mDesc = (EditText)view.findViewById(R.id.mEditDescription);
+        EditText mTask = view.findViewById(R.id.mEditTask);
+        EditText mDesc = view.findViewById(R.id.mEditDescription);
 
         mTask.setText(task);
         mTask.setSelection(task.length());
