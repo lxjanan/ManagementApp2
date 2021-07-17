@@ -17,7 +17,8 @@
     <string name="date">Date</string>
     <string name="select_date">Select date</string>
     <string name="forgot_pass">Reset Password</string>
-
+    <string name="reset">Reset</string>
+    <string name="reset_pass">Please enter your email if you wish to reset your password</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
