@@ -107,25 +107,7 @@ public class Login extends AppCompatActivity {
         });
 
         remember.setOnCheckedChangeListener((rememberButton, isChecked) -> {
-            String email = mLoginEmail.getText().toString().trim();
-            String password = mLoginPass.getText().toString().trim();
-
-            if (TextUtils.isEmpty(email)) {
-                mLoginEmail.setError("Add email");
-                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                return;
-            }
-            if (TextUtils.isEmpty(password)) {
-                mLoginPass.setError("Add password");
-                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                return;
-            } else if (rememberButton.isChecked()) {
+            if (rememberButton.isChecked()) {
                 SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE); //Used MODE_PRIVATE so that only this application is able to read the data
                 SharedPreferences.Editor editor = preferences1.edit();
                 editor.putString("remember", "true");

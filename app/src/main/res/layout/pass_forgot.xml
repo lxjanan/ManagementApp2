@@ -14,7 +14,9 @@
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/back_button"/>
+        android:contentDescription="@string/return_login"
+        app:srcCompat="@drawable/back_button"
+        android:layout_marginStart="10dp" />
 
     <ImageView
         android:layout_width="350dp"
@@ -51,7 +53,8 @@
         android:textColorHint="@color/black"
         android:background="@drawable/text_input"
         android:drawableLeft="@drawable/ic_mail"
-        android:elevation="6dp"/>
+        android:elevation="6dp"
+        tools:targetApi="lollipop" />
 
     <Button
         android:id="@+id/resetB"
@@ -66,6 +69,8 @@
         android:elevation="6dp"
         app:backgroundTint="@color/task_blue"
         android:drawableLeft="@drawable/ic_done"
-        android:drawableTint="@color/white" />
+        android:drawableTint="@color/white"
+        tools:targetApi="m"
+        tools:ignore="RtlHardcoded" />
 
 </LinearLayout>

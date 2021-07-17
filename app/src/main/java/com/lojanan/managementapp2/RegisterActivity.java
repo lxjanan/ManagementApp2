@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -44,6 +45,10 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.putString("remember", "false");
+                editor.apply();
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     startActivity(new Intent(RegisterActivity.this,Login.class));
@@ -78,12 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
                                 Intent intent = new Intent(RegisterActivity.this, ToDoActivity.class);
                                 startActivity(intent);
                                 finish();
-                                progress.dismiss();
                             } else {
                                 String error = task.getException().toString();
                                 Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show();
-                                progress.dismiss();
                             }
+                            progress.dismiss();
                         }
                     });
                 }
