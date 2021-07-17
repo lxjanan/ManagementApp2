@@ -3,7 +3,7 @@
     package="com.lojanan.managementapp2">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagementApp2">
-        <activity android:name=".PortalActivity"/>
+        <activity android:name=".PassForgot"></activity>
+        <activity android:name=".PortalActivity" />
         <activity android:name=".ToDoActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Login" />

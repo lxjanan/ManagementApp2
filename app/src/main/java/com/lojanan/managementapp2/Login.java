@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +29,7 @@ public class Login extends AppCompatActivity {
     // We use private as it cannot be overridden
     private EditText mLoginEmail, mLoginPass;
     private Button mLoginBtn;
-    private TextView loginRegister;
+    private TextView loginRegister, forgotPassword;
     private CheckBox remember;
 
     private FirebaseAuth fAuth;
@@ -47,6 +48,7 @@ public class Login extends AppCompatActivity {
         mLoginBtn = findViewById(R.id.loginB);
         loginRegister = findViewById(R.id.loginR);
         remember = findViewById(R.id.rememberMe);
+        forgotPassword = findViewById(R.id.forgotP);
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("remember", "");
@@ -118,6 +120,11 @@ public class Login extends AppCompatActivity {
                 editor.apply();
                 Toast.makeText(Login.this, "Remember me: OFF", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        forgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(Login.this, PassForgot.class);
+            startActivity(intent);
         });
     }
 }
