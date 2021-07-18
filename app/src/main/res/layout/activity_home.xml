@@ -9,7 +9,7 @@
     tools:context=".HomeActivity">
 
     <TextView
-        android:id="@+id/emailName"
+        android:id="@+id/emailNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email address:"
@@ -20,7 +20,18 @@
         android:layout_marginTop="180dp"
         tools:ignore="RtlHardcoded" />
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/emailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="180dp"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/userNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User:"
@@ -29,7 +40,20 @@
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="220dp"
-        tools:ignore="RtlHardcoded" />
+        android:layout_alignEnd="@id/emailNameTitle"
+        tools:ignore="RtlHardcoded"
+        android:layout_alignRight="@id/emailNameTitle" />
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_alignStart="@+id/emailName"
+        android:layout_marginTop="220dp"
+        tools:ignore="RtlHardcoded"
+        android:layout_alignLeft="@+id/emailName" />
 
     <android.widget.Button
         android:id="@+id/logoutB"

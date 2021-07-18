@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -46,8 +48,16 @@ public class PassForgot extends AppCompatActivity {
         retLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PassForgot.this,Login.class);
-                startActivity(intent);
+                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences1.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    startActivity(new Intent(PassForgot.this,Login.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                },100);
             }
         });
     }

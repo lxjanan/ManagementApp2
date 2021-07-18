@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -78,15 +81,14 @@ public class RegisterActivity extends AppCompatActivity {
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-
                             if (task.isSuccessful()){
-                                Intent intent = new Intent(RegisterActivity.this, ToDoActivity.class);
+                                Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(RegisterActivity.this, Login.class);
                                 startActivity(intent);
                                 finish();
                             } else {
                                 String error = task.getException().toString();
-                                Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show();
-                            }
+                                Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); }
                             progress.dismiss();
                         }
                     });
