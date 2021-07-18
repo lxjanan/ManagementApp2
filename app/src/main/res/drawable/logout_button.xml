@@ -5,4 +5,8 @@
         android:endColor="@color/task_blue"/>
     <corners
         android:radius="30dp"/>
+    <stroke
+        android:color="@color/white"
+        android:width="3dp"
+        />
 </shape>

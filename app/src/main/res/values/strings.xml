@@ -6,6 +6,9 @@
     <string name="logout_button">Logout</string>
     <string name="register_button">Register</string>
     <string name="register_text">Don\'t have an account? Register</string>
+    <string name="register_title">Register title</string>
+    <string name="register_acc">To create an account, please enter an email and password.
+        Press register button below once done</string>
     <string name="return_text">Already have an account? Click to return to login</string>
     <string name="return_login">Return to login</string>
     <string name="content_desc1">MRGS Logo</string>

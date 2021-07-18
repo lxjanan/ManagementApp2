@@ -19,6 +19,7 @@
         android:layout_marginStart="10dp" />
 
     <ImageView
+        android:id="@+id/resetTitle"
         android:layout_width="350dp"
         android:layout_height="120dp"
         android:layout_gravity="center"

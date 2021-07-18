@@ -11,13 +11,24 @@
 
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="60dp"
-        android:contentDescription="@string/content_desc1"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="@string/register_title"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/school_logo" />
+        app:srcCompat="@drawable/register_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_acc"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"/>
 
     <EditText
         android:id="@+id/registerE"

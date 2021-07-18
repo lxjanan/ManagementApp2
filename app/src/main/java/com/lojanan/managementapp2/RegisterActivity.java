@@ -48,13 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
                 SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences1.edit();
                 editor.putString("remember", "false");
-                editor.apply();
+                editor.apply(); //This code allows the users to return to the login page
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     startActivity(new Intent(RegisterActivity.this,Login.class));
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
-                },100);
+                },100); //This code opens the login activity with a neat fade transition
             }
         });
 
