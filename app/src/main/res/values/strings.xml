@@ -4,6 +4,7 @@
     <string name="enter_password">Enter Password</string>
     <string name="login_button">Login</string>
     <string name="logout_button">Logout</string>
+
     <string name="register_button">Register</string>
     <string name="register_text">Don\'t have an account? Register</string>
     <string name="register_title">Register title</string>
@@ -11,7 +12,9 @@
         Press register button below once done</string>
     <string name="return_text">Already have an account? Click to return to login</string>
     <string name="return_login">Return to login</string>
+
     <string name="content_desc1">MRGS Logo</string>
+
     <string name="new_task">Add new task</string>
     <string name="update_task">Update task</string>
     <string name="task">Task</string>
@@ -20,14 +23,20 @@
     <string name="enter_desc">Enter description</string>
     <string name="date">Date</string>
     <string name="select_date">Select date</string>
+
     <string name="forgot_pass">Reset Password</string>
     <string name="reset">Reset</string>
     <string name="reset_pass">Please enter your email if you wish to reset your password</string>
+
     <string name="save">Save</string>
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="remember">Remember me</string>
+
+    <string name="contact">Contact</string>
+    <string name="links">Useful sites for students</string>
+
     <string name="todolist">To Do List</string>
     <string name="home">Home</string>
     <string name="kamar">KAMAR Portal</string>

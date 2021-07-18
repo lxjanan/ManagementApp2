@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,8 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private android.widget.Button logout;
 
+    ImageView instagram, facebook;
+
     BottomNavigationView bottomNavigationView;
 
     @SuppressLint("NonConstantResourceId")
@@ -39,6 +43,12 @@ public class HomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         logout = findViewById(R.id.logoutB);
+
+        instagram = findViewById(R.id.instagramB);
+        facebook = findViewById(R.id.facebookB);
+
+        instagram.setOnClickListener(v -> gotoUrl("https://www.instagram.com/mountroskillgrammarschool/?hl=en"));
+        facebook.setOnClickListener(v -> gotoUrl("https://www.facebook.com/MountRoskillGS/"));
 
         logout.setOnClickListener(v -> {
             mAuth.signOut();
@@ -71,6 +81,12 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         });
     }
+
+    private void gotoUrl(String s) {
+        Uri uri = Uri.parse(s);
+        startActivity(new Intent(Intent.ACTION_VIEW, uri));
+    }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)

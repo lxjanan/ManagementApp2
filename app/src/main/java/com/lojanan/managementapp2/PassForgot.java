@@ -37,28 +37,20 @@ public class PassForgot extends AppCompatActivity {
         resetPass = findViewById(R.id.resetB);
 
         mAuth = FirebaseAuth.getInstance();
-        resetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetPassword();
-            }
-        });
+        resetPass.setOnClickListener(v -> resetPassword());
 
         retLogin = findViewById(R.id.returnB);
-        retLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    startActivity(new Intent(PassForgot.this,Login.class));
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    finish();
-                },100);
-            }
+        retLogin.setOnClickListener(v -> {
+            SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences1.edit();
+            editor.putString("remember", "false");
+            editor.apply();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(new Intent(PassForgot.this,Login.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            },100);
         });
     }
 
@@ -75,14 +67,11 @@ public class PassForgot extends AppCompatActivity {
             return;
         }
 
-        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(PassForgot.this, "Check email to reset password", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(PassForgot.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                }
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                Toast.makeText(PassForgot.this, "Check email to reset password", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(PassForgot.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         });
     }
