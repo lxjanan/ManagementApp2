@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Management App</string>
+    <string name="app_name">MRGS Management App</string>
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
     <string name="login_button">Login</string>
