@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance(); // Uses data from firebase
         logout = findViewById(R.id.logoutB);
 
         instagram = findViewById(R.id.instagramB);
@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         facebook.setOnClickListener(v -> gotoUrl("https://www.facebook.com/MountRoskillGS/"));
 
         logout.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this) //An alertdialog is built so that if user accidentally clicks sign out, they have the option return to the app
                     .setTitle("Sign out")
                     .setMessage("Are you sure you want to sign out?")
                     .setNegativeButton(android.R.string.no, null)
@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
                             mAuth.signOut();
                             SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences1.edit();
-                            editor.putString("remember", "false");
+                            editor.putString("remember", "false"); // Removes the stay signed in option so user has to relogin to access the app
                             editor.apply();
                             Handler handler = new Handler();
                             handler.postDelayed(() -> {

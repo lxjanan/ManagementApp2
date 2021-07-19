@@ -56,12 +56,12 @@ public class Login extends AppCompatActivity {
             Intent intent = new Intent(Login.this, HomeActivity.class); //Causes user to automatically login
             startActivity(intent);
         }else if (checkbox.equals("false")){
-            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show(); //User has to login when app starts up
         }
 
         mLoginBtn.setOnClickListener(v -> {
             String email = mLoginEmail.getText().toString().trim();
-            String password = mLoginPass.getText().toString().trim();
+            String password = mLoginPass.getText().toString().trim(); //Converts user input into string
 
             if (TextUtils.isEmpty(email)) {
                 mLoginEmail.setError("Email required");
@@ -78,21 +78,18 @@ public class Login extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Handler handler = new Handler();
-                        handler.postDelayed(() -> {
-                            startActivity(new Intent(Login.this, HomeActivity.class));
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            finish();
-                        },100);
-                    }else {
-                        Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                    }
+            fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        startActivity(new Intent(Login.this, HomeActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        finish();
+                    },100);
+                }else {
+                    Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         });
@@ -123,8 +120,12 @@ public class Login extends AppCompatActivity {
         }); // This code lets the user stay signed in if they check the checkbox
 
         forgotPassword.setOnClickListener(v -> {
-            Intent intent = new Intent(Login.this, PassForgot.class);
-            startActivity(intent);
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(new Intent(Login.this,PassForgot.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            },100);
         }); // Opens the forgot password activity which will allow users to reset their password
     }
 }
