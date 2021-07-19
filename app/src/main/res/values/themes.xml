@@ -13,7 +13,4 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-    <style name="Button.Logout" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@color/task_blue</item>
-    </style>
 </resources>

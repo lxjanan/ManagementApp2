@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private android.widget.Button logout;
+    private android.widget.Button logout, nzqa, nbts;
 
     ImageView instagram, facebook;
 
@@ -46,6 +46,11 @@ public class HomeActivity extends AppCompatActivity {
 
         instagram = findViewById(R.id.instagramB);
         facebook = findViewById(R.id.facebookB);
+        nzqa = findViewById(R.id.nzqaBtn);
+        nbts = findViewById(R.id.nbtsBtn);
+
+        nzqa.setOnClickListener(v -> gotoUrl("https://www.nzqa.govt.nz/ncea/subjects/"));
+        nbts.setOnClickListener(v -> gotoUrl("https://www.nobraintoosmall.co.nz/"));
 
         instagram.setOnClickListener(v -> gotoUrl("https://www.instagram.com/mountroskillgrammarschool/?hl=en"));
         facebook.setOnClickListener(v -> gotoUrl("https://www.facebook.com/MountRoskillGS/"));
@@ -60,10 +65,10 @@ public class HomeActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
-        });
+        }); // The logout button allows users to sign out. If user clicks sign out, the app will take them to login page and also if they exit, they will need to sign in again
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
-        bottomNavigationView.setSelectedItemId(R.id.homePage);
+        bottomNavigationView.setSelectedItemId(R.id.homePage); // Sets the activity that the user is on as selected. This allows user to know which activity they are on
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
@@ -79,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
             }
             return false;
-        });
+        }); // The navigation bar is the same for every section however as I am using activity, the activity is selected
     }
 
     private void gotoUrl(String s) {
@@ -97,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
+                        mAuth.signOut(); //signs out the user before exitting the app if they
                         HomeActivity.super.onBackPressed();
                         finishAffinity();
                     }

@@ -15,17 +15,50 @@
         android:fontFamily="@font/blackpine"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:textSize="50sp"
+        android:textSize="40sp"
+        android:letterSpacing="0.2"
         android:textStyle="bold"
-        android:layout_marginTop="170dp"/>
+        android:layout_marginTop="150dp"
+        tools:ignore="RelativeOverlap,UnusedAttribute" />
+
+    <android.widget.Button
+        android:id="@+id/nbtsBtn"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:text="@string/nbts"
+        android:textColor="@color/black"
+        android:background="@drawable/link_button"
+        android:elevation="6dp"
+        android:fontFamily="@font/lato"
+        android:textSize="20sp"
+        android:layout_marginTop="310dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        tools:ignore="UnusedAttribute" />
+    <android.widget.Button
+        android:id="@+id/nzqaBtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="@string/nzqa"
+        android:textColor="@color/black"
+        android:background="@drawable/link_button"
+        android:elevation="6dp"
+        android:fontFamily="@font/lato"
+        android:textSize="30sp"
+        android:layout_marginTop="250dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        tools:ignore="UnusedAttribute" />
 
     <ImageView
         android:id="@+id/instagramB"
         app:srcCompat="@drawable/instagram_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="550dp"
-        android:layout_marginLeft="120dp"/>
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginStart="120dp"
+        android:contentDescription="MRGS Instagram" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,9 +67,10 @@
         android:textColor="@color/white"
         android:fontFamily="@font/blackpine"
         android:textSize="50sp"
-        android:layout_marginTop="490dp"
+        android:layout_marginTop="390dp"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap" />
 
     <ImageView
         android:id="@+id/facebookB"
@@ -45,7 +79,7 @@
         android:layout_height="80dp"
         android:layout_toEndOf="@+id/instagramB"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="450dp"
         android:layout_toRightOf="@+id/instagramB" />
 
     <android.widget.Button
@@ -68,7 +102,8 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
-        android:drawableLeft="@drawable/ic_logout" />
+        android:drawableLeft="@drawable/ic_logout"
+        tools:targetApi="lollipop" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

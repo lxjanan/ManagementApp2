@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login); // Will display the login view xml
 
         fAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
@@ -120,11 +120,11 @@ public class Login extends AppCompatActivity {
                 editor.apply();
                 Toast.makeText(Login.this, "Remember me: OFF", Toast.LENGTH_SHORT).show();
             }
-        });
+        }); // This code lets the user stay signed in if they check the checkbox
 
         forgotPassword.setOnClickListener(v -> {
             Intent intent = new Intent(Login.this, PassForgot.class);
             startActivity(intent);
-        });
+        }); // Opens the forgot password activity which will allow users to reset their password
     }
 }

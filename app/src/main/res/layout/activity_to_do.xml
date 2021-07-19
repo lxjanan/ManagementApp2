@@ -28,7 +28,7 @@
             android:layout_marginRight="10dp"
             app:backgroundTint="@color/sea_blue"
             android:src="@drawable/ic_add"
-            app:tint="@color/fuchsia"/>
+            app:tint="@color/school_yellow"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"

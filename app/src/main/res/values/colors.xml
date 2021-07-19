@@ -2,19 +2,18 @@
 <resources>
     <color name="red_200">#FC8686</color>
     <color name="red_500">#EE0000</color>
-    <color name="red_700">#B30000</color>
+    <color name="red_700">#B30000</color> <!--These are the primary colors I used for the app-->
     <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_700">#FF018786</color> <!--These are secondary colors-->
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFFFF</color> <!--Monotone colors used mainly for text and dashes/strokes-->
     <color name="sea_blue">#82D4F5</color>
-    <color name="fuchsia">#FFD9DF</color>
-    <color name="peach">#FEEED7</color>
-    <color name="peach2">#FFFAF4</color>
-    <color name="lime">#3ADC57</color>
-    <color name="light_blue">#72D2FF</color>
+    <color name="fuchsia">#FFD9DF</color> <!--Used these to in splashscreen, login, registration & forgot password section-->
     <color name="blue">#327AF6</color>
     <color name="task_blue">#637EFF</color>
     <color name="task_red">#FF6363</color>
     <color name="task_yellow">#FFFC63</color>
+    <color name="school_red">#D40039</color>
+    <color name="school_blue">#002B82</color>
+    <color name="school_yellow">#F9D50A</color> <!--Use of color is discussed in documentation-->
 </resources>
