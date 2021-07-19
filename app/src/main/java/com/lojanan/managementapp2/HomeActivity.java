@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,15 +57,30 @@ public class HomeActivity extends AppCompatActivity {
         facebook.setOnClickListener(v -> gotoUrl("https://www.facebook.com/MountRoskillGS/"));
 
         logout.setOnClickListener(v -> {
-            mAuth.signOut();
-            SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences1.edit();
-            editor.putString("remember", "false");
-            editor.apply();
-            Intent intent = new Intent(HomeActivity.this, Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle("Sign out")
+                    .setMessage("Are you sure you want to sign out?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            mAuth.signOut();
+                            SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences1.edit();
+                            editor.putString("remember", "false");
+                            editor.apply();
+                            Handler handler = new Handler();
+                            handler.postDelayed(() -> {
+                                Intent intent = new Intent(HomeActivity.this, Login.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+                                finish();
+                            },100);
+                        }
+                    }).create().show();
         }); // The logout button allows users to sign out. If user clicks sign out, the app will take them to login page and also if they exit, they will need to sign in again
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
@@ -102,7 +118,6 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        mAuth.signOut(); //signs out the user before exitting the app if they
                         HomeActivity.super.onBackPressed();
                         finishAffinity();
                     }
