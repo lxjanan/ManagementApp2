@@ -3,6 +3,7 @@ package com.lojanan.managementapp2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -74,5 +75,21 @@ public class PassForgot extends AppCompatActivity {
                 Toast.makeText(PassForgot.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Leave app")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                    SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences1.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    PassForgot.super.onBackPressed();
+                    finishAffinity();
+                }).create().show();
     }
 }

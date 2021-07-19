@@ -31,11 +31,11 @@ public class SplashScreen extends AppCompatActivity {
 
         videoView = findViewById(R.id.viewVideo);
 
-        String path = "android.resource://com.lojanan.managementapp2/"+R.raw.splash_screen;
+        String path = "android.resource://com.lojanan.managementapp2/"+R.raw.splash_screen; // Gets the video location
 
         Uri uri = Uri.parse(path);
-        videoView.setVideoURI(uri);
-        videoView.setOnPreparedListener(MediaPlayer::start);
+        videoView.setVideoURI(uri); // Sets the video
+        videoView.setOnPreparedListener(MediaPlayer::start); // Automatically starts the video when the app begins
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -43,5 +43,5 @@ public class SplashScreen extends AppCompatActivity {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
         },2500);
-    }
+    } // Opens the login activity after the video is 2.5 seconds in
 }

@@ -3,7 +3,9 @@ package com.lojanan.managementapp2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,55 +47,65 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterButton = findViewById(R.id.registerB);
         RegisterReturn = findViewById(R.id.registerR);
 
-        RegisterReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
-                editor.apply(); //This code allows the users to return to the login page
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    startActivity(new Intent(RegisterActivity.this,Login.class));
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                    finish();
-                },100); //This code opens the login activity with a neat fade transition
-            }
+        RegisterReturn.setOnClickListener(v -> {
+            SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences1.edit();
+            editor.putString("remember", "false");
+            editor.apply(); //This code allows the users to return to the login page
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(new Intent(RegisterActivity.this,Login.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            },100); //This code opens the login activity with a neat fade transition
         });
 
-        RegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = RegisterEmail.getText().toString().trim();
-                String password = RegisterPass.getText().toString().trim();
+        RegisterButton.setOnClickListener(v -> {
+            String email = RegisterEmail.getText().toString().trim();
+            String password = RegisterPass.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email)){
-                    RegisterEmail.setError("Please enter an email address");
-                    return;
-                }
-                if (TextUtils.isEmpty(password)){
-                    RegisterPass.setError("Please enter a password");
-                    return;
-                } else {
-                    progress.setMessage("Registration in progress");
-                    progress.setCanceledOnTouchOutside(false);
-                    progress.show();
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(RegisterActivity.this, Login.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                String error = task.getException().toString();
-                                Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); }
-                            progress.dismiss();
-                        }
-                    });
-                }
+            if (TextUtils.isEmpty(email)){
+                RegisterEmail.setError("Please enter an email address"); //Asks user to fill in the input if they left it empty
+                return;
+            }
+            if (TextUtils.isEmpty(password)){
+                RegisterPass.setError("Please enter a password");
+                return;
+            }if (password.length() < 6) {
+                RegisterPass.setError("Password must be more than 6 characters");
+                return;
+            } else {
+                progress.setMessage("Registration in progress");
+                progress.setCanceledOnTouchOutside(false);
+                progress.show();
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegisterActivity.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String error = task.getException().toString();
+                        Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); }
+                    progress.dismiss();
+                });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Leave app")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                    SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences1.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    RegisterActivity.super.onBackPressed();
+                    finishAffinity();
+                }).create().show();
     }
 }
