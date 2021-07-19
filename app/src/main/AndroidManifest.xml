@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ManagementApp2">
-        <activity android:name=".PassForgot"></activity>
-        <activity android:name=".PortalActivity" />
+        <activity android:name=".PassForgot"/>
+        <activity android:name=".PortalActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".ToDoActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Login" />
