@@ -87,14 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RegisterActivity.this, Login.class);
                             startActivity(intent);
-                            finish();
+                            finish(); // If the user is verified, then it will let them know to use the account
                         } else {
                             user.sendEmailVerification();
                             Toast.makeText(RegisterActivity.this, "Please check your email to verify account", Toast.LENGTH_LONG).show();
-                        }
+                        } // If user isn't verified, then a verification email will be sent to the user
                     } else {
                         String error = task.getException().toString();
-                        Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); }
+                        Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); } // If error occurs, user will be alerted
                     progress.dismiss();
                 });
             }
@@ -115,5 +115,5 @@ public class RegisterActivity extends AppCompatActivity {
                     RegisterActivity.super.onBackPressed();
                     finishAffinity();
                 }).create().show();
-    }
+    } // When user presses the back button, an alertdialog will popup asking user if they wish to leave the app
 }

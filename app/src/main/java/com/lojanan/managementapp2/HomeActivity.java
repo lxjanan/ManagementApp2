@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mAuth = FirebaseAuth.getInstance(); // Uses data from firebase
+        mAuth = FirebaseAuth.getInstance(); // Gets data from firebase
         logout = findViewById(R.id.logoutB);
 
         instagram = findViewById(R.id.instagramB);
@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         nzqa = findViewById(R.id.nzqaBtn);
         nbts = findViewById(R.id.nbtsBtn);
 
-        nzqa.setOnClickListener(v -> gotoUrl("https://www.nzqa.govt.nz/ncea/subjects/"));
+        nzqa.setOnClickListener(v -> gotoUrl("https://www.nzqa.govt.nz/ncea/subjects/")); //This allows for user to go to these links on button click
         nbts.setOnClickListener(v -> gotoUrl("https://www.nobraintoosmall.co.nz/"));
 
         instagram.setOnClickListener(v -> gotoUrl("https://www.instagram.com/mountroskillgrammarschool/?hl=en"));
@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                 Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
                                 finish();
-                            },100);
+                            },100); // Transition for smoother user experience
                         }
                     }).create().show();
         }); // The logout button allows users to sign out. If user clicks sign out, the app will take them to login page and also if they exit, they will need to sign in again
@@ -97,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.kamarPortal:
                     startActivity(new Intent(getApplicationContext(), PortalActivity.class));
                     overridePendingTransition(0,0);
-                    return true;
+                    return true; // Transitions are used to create smooth user experience
             }
             return false;
         }); // The navigation bar is the same for every section however as I am using activity, the activity is selected
@@ -106,20 +106,20 @@ public class HomeActivity extends AppCompatActivity {
     private void gotoUrl(String s) {
         Uri uri = Uri.parse(s);
         startActivity(new Intent(Intent.ACTION_VIEW, uri));
-    }
+    } // Code for opening the links. The s that is used is the link which I have used above on lines 53 to 57
 
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Leave app")
-                .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
+                .setMessage("Are you sure you want to exit?") // On back pressed, user will be asked if they want to leave the app.
+                .setNegativeButton(android.R.string.no, null) // If they select no, they will return to current activity
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         HomeActivity.super.onBackPressed();
-                        finishAffinity();
+                        finishAffinity(); // If they select yes, then the app will close
                     }
                 }).create().show();
     }

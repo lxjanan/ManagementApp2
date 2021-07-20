@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
             if (password.length() < 6) {
                 mLoginPass.setError("Password must be more than 6 characters");
                 return;
-            }
+            } // These errors are if email or password field is empty, or if password length is below 6 characters. The user will be alerted of any errors.
 
             progressBar.setVisibility(View.VISIBLE);
 
@@ -87,11 +87,11 @@ public class Login extends AppCompatActivity {
                         startActivity(new Intent(Login.this, HomeActivity.class));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         finish();
-                    },100);
+                    },100); //If the email and password match, then the user is able to access the HomeActivity
                 }else {
                     Toast.makeText(Login.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
-                }
+                } // If email and password don't match, then the user will get an error message explaining the error
             });
         });
 
@@ -102,19 +102,19 @@ public class Login extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             },100);
-        });
+        }); // This will redirect user to register page
 
         remember.setOnCheckedChangeListener((rememberButton, isChecked) -> {
             if (rememberButton.isChecked()) {
                 SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE); //Used MODE_PRIVATE so that only this application is able to read the data
                 SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "true");
+                editor.putString("remember", "true"); //Since this is set to true, the username and password will be remembered and this way allow users to stay signed in
                 editor.apply();
                 Toast.makeText(Login.this, "Remember me: ON", Toast.LENGTH_SHORT).show();
             }else if (!rememberButton.isChecked()) {
                 SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences1.edit();
-                editor.putString("remember", "false");
+                editor.putString("remember", "false"); //This is set to false so, the username and password will not be remembered and this way users have to sign in before accessing Homepage
                 editor.apply();
                 Toast.makeText(Login.this, "Remember me: OFF", Toast.LENGTH_SHORT).show();
             }
@@ -143,5 +143,5 @@ public class Login extends AppCompatActivity {
                     Login.super.onBackPressed();
                     finishAffinity();
                 }).create().show();
-    }
+    } // When user presses the back button, an alertdialog will popup asking user if they wish to leave the app
 }

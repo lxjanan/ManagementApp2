@@ -225,12 +225,10 @@ public class ToDoActivity extends AppCompatActivity {
             super(itemView);
             mView = itemView;
         }
-
         public void setTask(String task){
             TextView taskTextView = mView.findViewById(R.id.taskView);
             taskTextView.setText(task); // Sets the user input for task
         }
-
         public void setDesc(String desc){
             TextView descTextView = mView.findViewById(R.id.descriptionView);
             descTextView.setText(desc); // Sets the user input for description
@@ -276,11 +274,9 @@ public class ToDoActivity extends AppCompatActivity {
                     String error = Objects.requireNonNull(task.getException()).toString();
                     Toast.makeText(ToDoActivity.this, "Task update failed"+ error, Toast.LENGTH_SHORT).show();
                 }
-
             });
             dialog.dismiss();
-
-        });
+        }); // Updates the task when update button is selected. Let's the user know if the task succeeded or failed.
 
         deleteB.setOnClickListener(v12 -> {
             reference.child(key).removeValue().addOnCompleteListener(task -> {
@@ -290,7 +286,7 @@ public class ToDoActivity extends AppCompatActivity {
                     String error = Objects.requireNonNull(task.getException()).toString();
                     Toast.makeText(ToDoActivity.this, "Task delete failed"+ error, Toast.LENGTH_SHORT).show();
                 }
-            });
+            }); // Deletes the task when user selects the delete button. Lets the user know if deletion was successful or failed.
 
             dialog.dismiss();
         });
