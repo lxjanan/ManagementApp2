@@ -26,6 +26,7 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="@string/nbts"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         android:background="@drawable/link_button"
         android:elevation="6dp"
