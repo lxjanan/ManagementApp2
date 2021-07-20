@@ -15,7 +15,7 @@
         android:theme="@style/Theme.ManagementApp2">
         <activity android:name=".PassForgot"/>
         <activity android:name=".PortalActivity" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".ToDoActivity" />
+        <activity android:name=".ToDoActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Login" />
         <activity android:name=".HomeActivity" />

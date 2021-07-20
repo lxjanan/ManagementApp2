@@ -23,7 +23,7 @@ public class PortalActivity extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.portalView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://kamarportal.mrgs.school.nz/index.php/home");
+        webView.loadUrl("https://kamarportal.mrgs.school.nz/index.php/home"); //Opens the Kamar Portal MRGS Url
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -51,9 +51,11 @@ public class PortalActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (webView.canGoBack()) {
-            webView.goBack();
+            webView.goBack(); //Allows user to use the back button on the webView
         } else {
             super.onBackPressed();
+            startActivity(new Intent(PortalActivity.this,HomeActivity.class));
+            overridePendingTransition(0,0); // Will take user back to HomeActivity if back pressed more times than the user had visited
         }
     }
 }

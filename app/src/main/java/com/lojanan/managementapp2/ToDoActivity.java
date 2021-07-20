@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,6 +74,7 @@ public class ToDoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(llm);
 
         FirebaseUser mUser = mAuth.getCurrentUser();
+        assert mUser != null;
         String userID = mUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(userID);
 
@@ -127,13 +130,10 @@ public class ToDoActivity extends AppCompatActivity {
             datePickerDialog.show();
         }); // When the edit text for the date is selected, the date picker dialog will open allowing users to select a date
 
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month +1; // Added 1 to the month as there is no month with 0. January = 1, February = 2 and so on
-                String mDate = dayOfMonth+"/"+month+"/"+year; // This is the string text for how the date will look
-                date.setText(mDate); // This will be what user selects from date picker
-            }
+        setListener = (view, year1, month1, dayOfMonth) -> {
+            month1 = month1 +1; // Added 1 to the month as there is no month with 0. January = 1, February = 2 and so on
+            String mDate = dayOfMonth+"/"+ month1 +"/"+ year1; // This is the string text for how the date will look
+            date.setText(mDate); // This will be what user selects from date picker
         }; // The setListener sets the editText's text value as the user's selected date from the DatePickerDialog
 
         Button save = myView.findViewById(R.id.saveBtn);
@@ -263,8 +263,6 @@ public class ToDoActivity extends AppCompatActivity {
             task = mTask.getText().toString().trim();
             description = mDesc.getText().toString().trim();
 
-            String date = DateFormat.getDateInstance().format(new Date());
-
             Model model = new Model(task, description, key, date);
             reference.child(key).setValue(model).addOnCompleteListener(task -> {
 
@@ -276,8 +274,13 @@ public class ToDoActivity extends AppCompatActivity {
                 }
             });
             dialog.dismiss();
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                startActivity(getIntent());
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            },0);
         }); // Updates the task when update button is selected. Let's the user know if the task succeeded or failed.
-
         deleteB.setOnClickListener(v12 -> {
             reference.child(key).removeValue().addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
@@ -291,5 +294,11 @@ public class ToDoActivity extends AppCompatActivity {
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ToDoActivity.this,HomeActivity.class));
+        overridePendingTransition(0,0); //Returns to the homepage when back button is pressed
     }
 }
