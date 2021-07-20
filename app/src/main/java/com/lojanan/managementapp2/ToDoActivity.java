@@ -78,7 +78,7 @@ public class ToDoActivity extends AppCompatActivity {
         loader = new ProgressDialog(this);
 
         FloatingActionButton fab = findViewById(R.id.floatBtn);
-        fab.setOnClickListener(v -> addTask());
+        fab.setOnClickListener(v -> addTask()); // When the floatingactionbutton is tapped, it will start the addTask() process
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.toDoList);
@@ -105,7 +105,7 @@ public class ToDoActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
 
         View myView = inflater.inflate(R.layout.addtask_file, null);
-        alertDialog.setView(myView);
+        alertDialog.setView(myView); // Sets the addtask_file xml as the view to be presented
 
         final AlertDialog dialog = alertDialog.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //This code removes the white part of the alertdialog
@@ -113,7 +113,7 @@ public class ToDoActivity extends AppCompatActivity {
 
         final EditText task = myView.findViewById(R.id.task);
         final EditText description = myView.findViewById(R.id.description);
-        final EditText date = myView.findViewById(R.id.date);
+        final EditText date = myView.findViewById(R.id.date); // This is where user can input
 
         Calendar calendar = Calendar.getInstance(); // Gets Calendar
         final int year = calendar.get(Calendar.YEAR);
@@ -125,14 +125,14 @@ public class ToDoActivity extends AppCompatActivity {
                     setListener,year,month,day);
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
-        }); // When the edit text for the date is selected, the datepicker dialog will open allowing users to select a date
+        }); // When the edit text for the date is selected, the date picker dialog will open allowing users to select a date
 
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month +1;
-                String mDate = dayOfMonth+"/"+month+"/"+year;
-                date.setText(mDate);
+                month = month +1; // Added 1 to the month as there is no month with 0. January = 1, February = 2 and so on
+                String mDate = dayOfMonth+"/"+month+"/"+year; // This is the string text for how the date will look
+                date.setText(mDate); // This will be what user selects from date picker
             }
         }; // The setListener sets the editText's text value as the user's selected date from the DatePickerDialog
 
@@ -193,7 +193,7 @@ public class ToDoActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull MyViewHolder holder, final int position, @NonNull Model model) {
                 holder.setDate(model.getDate());
                 holder.setTask(model.getTask());
-                holder.setDesc(model.getDescription());
+                holder.setDesc(model.getDescription()); //Sets the task, description & date on the To-Do List in a cardview
 
                 holder.mView.setOnClickListener(v -> {
                     key = getRef(position).getKey();
@@ -208,7 +208,7 @@ public class ToDoActivity extends AppCompatActivity {
             @NonNull
             @Override
             public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout, parent, false); // The retrieved_layout is the xml file the tasks would be displayed as
                 view.getLayoutParams().height = parent.getMeasuredHeight() / 4; //This code is added so that the ViewHolder doesn't take up an entire page
                 return new MyViewHolder(view);
             }
