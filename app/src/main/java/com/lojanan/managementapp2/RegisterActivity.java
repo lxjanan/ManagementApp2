@@ -83,15 +83,17 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                        if (user.isEmailVerified()){
+                        assert user != null;
+                        if (!user.isEmailVerified()) {
+                            user.sendEmailVerification();
+                            Toast.makeText(RegisterActivity.this, "Please check your email to verify account", Toast.LENGTH_LONG).show();
+                        } // If user isn't verified, then a verification email will be sent to the user
+                        else {
                             Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RegisterActivity.this, Login.class);
                             startActivity(intent);
                             finish(); // If the user is verified, then it will let them know to use the account
-                        } else {
-                            user.sendEmailVerification();
-                            Toast.makeText(RegisterActivity.this, "Please check your email to verify account", Toast.LENGTH_LONG).show();
-                        } // If user isn't verified, then a verification email will be sent to the user
+                        }
                     } else {
                         String error = task.getException().toString();
                         Toast.makeText(RegisterActivity.this, "Registration failed" + error, Toast.LENGTH_SHORT).show(); } // If error occurs, user will be alerted
