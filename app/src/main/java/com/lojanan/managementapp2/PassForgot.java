@@ -44,14 +44,14 @@ public class PassForgot extends AppCompatActivity {
         retLogin.setOnClickListener(v -> {
             SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences1.edit();
-            editor.putString("remember", "false");
+            editor.putString("remember", "false"); // Unchecks checkbox to allow for safe return to login
             editor.apply();
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 startActivity(new Intent(PassForgot.this,Login.class));
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
-            },100);
+            },100); // Redirects user to login page with fade transition
         });
     }
 
@@ -59,12 +59,12 @@ public class PassForgot extends AppCompatActivity {
         String email = emailText.getText().toString().trim();
         if (email.isEmpty()){
             emailText.setError("Enter email");
-            emailText.requestFocus();
+            emailText.requestFocus(); // If email section is empty, error is shown
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             emailText.setError("Please provide a valid email");
-            emailText.requestFocus();
+            emailText.requestFocus(); // If email doesn't match any email within Firebase, error is shown
             return;
         }
 
@@ -74,14 +74,14 @@ public class PassForgot extends AppCompatActivity {
             } else {
                 Toast.makeText(PassForgot.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
-        });
+        }); // Sends password reset email if successful
     }
 
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Leave app")
-                .setMessage("Are you sure you want to exit?")
+                .setMessage("Are you sure you want to exit?") // Asks user if they wish to leave the app
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
                     SharedPreferences preferences1 = getSharedPreferences("checkbox", MODE_PRIVATE);
@@ -89,7 +89,7 @@ public class PassForgot extends AppCompatActivity {
                     editor.putString("remember", "false");
                     editor.apply();
                     PassForgot.super.onBackPressed();
-                    finishAffinity();
+                    finishAffinity(); // Closes app if user selects yes
                 }).create().show();
     }
 }

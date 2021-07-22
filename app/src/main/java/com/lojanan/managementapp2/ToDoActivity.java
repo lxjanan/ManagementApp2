@@ -64,19 +64,19 @@ public class ToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance(); // User data is gained
 
         recyclerView = findViewById(R.id.recyclerV);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setReverseLayout(true);
         llm.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(llm);
+        recyclerView.setLayoutManager(llm); // sets size of the LinearLayout on the ToDoActivity
 
         FirebaseUser mUser = mAuth.getCurrentUser();
         assert mUser != null;
-        String userID = mUser.getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(userID);
+        String userID = mUser.getUid(); // Gets user ID so that their data is presented
+        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(userID); // Gets user's previously saved data from Firebase
 
         loader = new ProgressDialog(this);
 
@@ -89,9 +89,9 @@ public class ToDoActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.toDoList:
-                    return true;
+                    return true; // Doesn't change activity
                 case R.id.homePage:
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class)); // Changes activity
                     overridePendingTransition(0,0);
                     return true;
                 case R.id.kamarPortal:
@@ -160,7 +160,7 @@ public class ToDoActivity extends AppCompatActivity {
             } else {
                 loader.setMessage("Task is being added");
                 loader.setCanceledOnTouchOutside(false);
-                loader.show();
+                loader.show(); // Shows loader to let user know that task is being added
 
                 Model model = new Model(mTask, mDescription, id, mDate);
                 assert id != null;
@@ -261,16 +261,16 @@ public class ToDoActivity extends AppCompatActivity {
 
         updateB.setOnClickListener(v1 -> {
             task = mTask.getText().toString().trim();
-            description = mDesc.getText().toString().trim();
+            description = mDesc.getText().toString().trim(); // Converts the input into string to be stored in database
 
             Model model = new Model(task, description, key, date);
             reference.child(key).setValue(model).addOnCompleteListener(task -> {
 
                 if (task.isSuccessful()){
-                    Toast.makeText(ToDoActivity.this, "Updated Task", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ToDoActivity.this, "Updated Task", Toast.LENGTH_SHORT).show(); // Lets user know that their task got updated
                 }else {
                     String error = Objects.requireNonNull(task.getException()).toString();
-                    Toast.makeText(ToDoActivity.this, "Task update failed"+ error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ToDoActivity.this, "Task update failed"+ error, Toast.LENGTH_SHORT).show(); // Lets user know that their task didn't get updated
                 }
             });
             dialog.dismiss();
